@@ -25,7 +25,7 @@ function ListCars(){
             <div className="table-wrapper">
               <div className="table-title">
                 <div className="row">
-                  <div className="col-sm-8"><h2>Car<b>Details</b></h2></div>
+                  <div className="col-sm-8"><h2>List Cars</h2></div>
                   <div className="col-sm-4">
                     <a href="{{ route('cars.create') }}">   <button type="button" className="btn btn-info add-new"><i className="fa fa-plus" /> Add New</button></a>
                   </div>
