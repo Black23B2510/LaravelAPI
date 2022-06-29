@@ -34,7 +34,7 @@ function ListCars(){
               <table className="table table-bordered">
                 <thead style={{width: '300px'}}>
                   <tr>
-                    <th>ID</th>
+                    <th>Car_ID</th>
                     <th style={{width: '110px'}}>Image</th>
                     <th>Description</th>
                     <th>Model</th>
