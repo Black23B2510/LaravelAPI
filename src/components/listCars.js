@@ -38,7 +38,7 @@ function ListCars(){
                     <th style={{width: '110px'}}>Image</th>
                     <th>Description</th>
                     <th>Model</th>
-                    <th style={{width: '120px'}}>Produced_on</th>
+                    <th style={{width: '120px'}}>Produced__on</th>
                     <th>Actions</th>
                   </tr>
                 </thead>
