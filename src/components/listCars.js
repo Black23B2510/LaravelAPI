@@ -1,6 +1,8 @@
 import axios from 'axios';
 import React, { Component } from 'react';
 import {useEffect, useState} from "react";
+import Create from './addCar';
+
 function ListCars(){
   const [cars, setCars] = useState([]);
   const getCars= ()=>{
@@ -20,14 +22,15 @@ function ListCars(){
   },[])
     return (
         <div>
+           
           <div className="container">
-            
+          <Create/>
             <div className="table-wrapper">
               <div className="table-title">
                 <div className="row">
-                  <div className="col-sm-8"><h2>List Cars</h2></div>
+                  <div className="col-sm-8"><h2>List Cars</h2></div>  
                   <div className="col-sm-4">
-                    <a href="{{ route('cars.create') }}">   <button type="button" className="btn btn-info add-new"><i className="fa fa-plus" /> Add New</button></a>
+                   
                   </div>
                 </div>
               </div>
@@ -38,7 +41,7 @@ function ListCars(){
                     <th style={{width: '110px'}}>Image</th>
                     <th>Description</th>
                     <th>Model</th>
-                    <th style={{width: '120px'}}>Produced__on</th>
+                    <th style={{width: '120px'}}>Produced_on</th>
                     <th>Actions</th>
                   </tr>
                 </thead>
@@ -48,7 +51,7 @@ function ListCars(){
                   cars.map((car,index)=>
                   <tr key={index}>
                   <td>{car.id}</td>
-                  <td><img src={car.image} className="card-img-top" alt="..." width="100px" /></td>
+                  <td><img src={`http://127.0.0.1:8000/images/${car.image}`} className="card-img-top" alt="..." width="100px" /></td>
                   <td>{car.description}</td>
                   <td>{car.model}</td>
                   <td>{car.produced_on}</td>
