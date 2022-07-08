@@ -24,7 +24,7 @@ function ListCars(){
         <div>
            
           <div className="container">
-          <Create/>
+          <Create getCars={getCars}/>
             <div className="table-wrapper">
               <div className="table-title">
                 <div className="row">
