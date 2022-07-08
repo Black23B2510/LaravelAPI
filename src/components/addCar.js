@@ -4,8 +4,7 @@ import {Button,Modal,Form} from 'react-bootstrap';
 import axios from 'axios';
 
 
-
-const Create = () => {
+function Create ({getCars}) {
     const [show, setShow] = useState(false);
     const [car, setCar] = useState({
         model: "",
@@ -14,7 +13,14 @@ const Create = () => {
         produced_on:"",
         file:null
       });
-    
+      const tooggle = () => {
+        setShow(!show);
+    }
+      const onRedirect=()=>{
+        setCar({});  //set lại state car là đói tượng rỗng
+        tooggle();
+       getCars({});
+    };
     const handleInputChange = (e) => {
         const {name, value} = e.target;
         console.log(car)
@@ -37,6 +43,7 @@ const Create = () => {
         console.log(car)
     
     }
+
      const OnSave = (event)=>{
         event.preventDefault();
         const fileInput = document.querySelector('#fileUpload');
@@ -48,6 +55,7 @@ const Create = () => {
         axios.post('http://localhost:8000/api/cars',formData)
         .then(function(response){
             console.log(response);
+            onRedirect();
         })
         .catch(function(error){
             console.log(error);
