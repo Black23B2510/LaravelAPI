@@ -1,38 +1,58 @@
 
 import React, { useState } from 'react';
 import {Button,Modal,Form} from 'react-bootstrap';
-
+import axios from 'axios';
 
 
 
 const Create = () => {
-  const [show, setShow] = useState(false);
- 
-  
-  
-    const [state, setState] = useState({
-        name: "",
-        make: "",
-        image:""
+    const [show, setShow] = useState(false);
+    const [car, setCar] = useState({
+        model: "",
+        description: "",
+        image:"",
+        produced_on:"",
+        file:null
       });
     
-    const handleInputChange = (event) => {
-    
-        setState((prevProps) => ({
-          ...prevProps,
-          [event.target.name]: event.target.value
+    const handleInputChange = (e) => {
+        const {name, value} = e.target;
+        console.log(car)
+        setCar(() => ({
+          ...car,
+          [name]: value
     }));
     }
-
+    const handleInputImage = (e) => {
+        setCar(()=>({
+            ...car,
+            file: e.target.files && e.target.files.length ? URL.createObjectURL(e.target.files[0]) : car.file,
+            image: e.target.files && e.target.files.length ? e.target.files[0].name : car.image
+        }));
+    }
     const handleClose = () => setShow(false);
     const handleShow = () => setShow(true);
     const handleSubmit = (e) => {
         e.preventDefault()
-        console.log(state)
+        console.log(car)
     
     }
-     
-
+     const OnSave = (event)=>{
+        event.preventDefault();
+        const fileInput = document.querySelector('#fileUpload');
+        const formData = new FormData();
+        formData.append('model',car.model);
+        formData.append('description',car.description);
+        formData.append('image',fileInput.files[0]);
+        formData.append('produced_on',car.produced_on);
+        axios.post('http://localhost:8000/api/cars',formData)
+        .then(function(response){
+            console.log(response);
+        })
+        .catch(function(error){
+            console.log(error);
+        })
+     }
     return (
         <>
             <Button variant="primary" onClick={handleShow}>
@@ -48,28 +68,28 @@ const Create = () => {
 
                         <Form.Group className="mb-3" controlId="formBasicEmail">
                             <Form.Label>Model</Form.Label>
-                            <Form.Control name='model' type="text"  value={state.name} onChange ={handleInputChange} placeholder="Enter model" />
+                            <Form.Control name='model' id='model' type="text"  onChange ={handleInputChange} placeholder="Enter model" />
 
                         </Form.Group>
                         <Form.Group className="mb-3" controlId="formBasicEmail">
                             <Form.Label>Description</Form.Label>
-                            <Form.Control name='description'  value={state.make} type="text" onChange ={handleInputChange} placeholder="Enter description" />
+                            <Form.Control name='description' id='description'   type="text" onChange ={handleInputChange} placeholder="Enter description" />
 
                         </Form.Group>
                         <Form.Group className="mb-3" controlId="formBasicEmail">
                             <Form.Label>Produced_on</Form.Label>
-                            <Form.Control name='produced_on'  value={state.make} type="date" onChange ={handleInputChange} placeholder="Enter produced_on" />
+                            <Form.Control name='produced_on' id='produced_on'  type="date" onChange ={handleInputChange} placeholder="Enter produced_on" />
 
                         </Form.Group>
                         <Form.Group className="mb-3" controlId="formBasicEmail">
                             <Form.Label>Image</Form.Label>
-                            <Form.Control type="file" name="image" value={state.image}  onChange ={handleInputChange} placeholder="Enter image" />
-
+                            <Form.Control type="file" name="image" id='fileUpload'  onChange ={handleInputImage} placeholder="Enter image" />
+                            <img alt='ts' src={car.file} style={{with:'10em'}}></img>
                         </Form.Group>
 
                         <Form.Group className="mb-3 text-center" controlId="formBasicEmail">
 
-                            <Button type="submit" className="m-3"  >
+                            <Button type="submit" className="m-3" onClick ={OnSave}  >
                                 Add to cart
                             </Button>
 
